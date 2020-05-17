@@ -15,15 +15,16 @@
         >for {{ weatherData.city.name }}, {{weatherData.city.country }}</span>
       </router-link>
     </p>
-    <ul>
+    <ul v-if="weatherData && errors.length===0" class="forecast">
       <li>
-        <!-- TODO: Make weather summary be in a child component. -->
+        
         <weather-summary v-bind:weatherData="forecast.weather"></weather-summary>
-        <!-- TODO: Make dl of weather data be in a child component. -->
-        <weather-conditions v-bind:conditions="city.main"></weather-conditions>
-        <error-list v-bind:errorList="errors"></error-list>
-      </li>
+        
+        <weather-conditions v-bind:conditions="forecast.main"></weather-conditions>
+        </li>
     </ul>
+    <div v-else>
+      <h2>Loading...</h2></div><error-list v-bind:errorList="errors"></error-list>
   </div>
 </template>
 
@@ -100,18 +101,14 @@ export default {
     }
   },
   components: {
-    "weather-summary": WeatherSummary
-  },
-  components: {
-    "weather-conditions": WeatherConditions
-  },
-  components: {
-    "error-list": ErrorList
+    'weather-summary': WeatherSummary,
+    'weather-conditions': WeatherConditions,
+    'error-list': ErrorList
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped>
 .errors li {
   color: red;

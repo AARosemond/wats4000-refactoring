@@ -4,7 +4,7 @@
     <form v-on:submit.prevent="getCities">
       <p>
         Enter city name:
-        <input type="text" v-model="query" placeholder="Paris" />
+        <input type="text" v-model="query" placeholder="Paris, FR">
         <button type="submit">Go</button>
       </p>
     </form>
@@ -17,23 +17,13 @@
           >View Current Weather</router-link>
         </p>
 
-        <!-- TODO: Make weather summary be in a child component. -->
-        <div v-for="(weatherSummary,index) in city.weather" class="weatherSummary" :key="index">
-          <weather-summary v-bind:weatherData="city.weather"></weather-summary>
-          <img
-            v-bind:src="'http://openweathermap.org/img/w/' + weatherSummary.icon + '.png'"
-            v-bind:alt="weatherSummary.main"
-          />
-          <br />
-          <b>{{ weatherSummary.main }}</b>
-        </div>
-        <!-- TODO: Make dl of weather data be in a child component. -->
-        <weather-conditions v-bind:conditions="city.main"></weather-conditions>
-        
+        <weather-summary v-bind:weatherData="weatherData.weather"></weather-summary>
+        <weather-conditions v-bind:conditions="weatherData.main"></weather-conditions>        
       </li>
     </ul>
-    <error-list v-bind:errorList="errors"></error-list>
-    </div>
+      <error-list v-bind:errorList="errors"></error-list>
+        
+  </div>
 </template>
 
 <script>
@@ -68,18 +58,14 @@ export default {
     }
   },
   components: {
-    'weather-summary': WeatherSummary
-  },
-  components: {
-    'weather-conditions': WeatherConditions
-  },
-  components: {
+    'weather-summary': WeatherSummary,
+    'weather-conditions': WeatherConditions,
     'error-list': ErrorList
+
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .errors li {
   color: red;

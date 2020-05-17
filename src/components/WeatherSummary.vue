@@ -1,11 +1,12 @@
 <template>
-  <div><div v-for="weatherSummary in weatherData">{{ weatherSummary }}</div>
-    
+ <div>
+   <div v-for="weatherSummary in weatherData" :key="weatherSummary.main">{{ weatherSummary }}
       <img v-bind:src="'http://openweathermap.org/img/w/' + weatherSummary.icon + '.png'" v-bind:alt="weatherSummary.main">
       <br>
       <b>{{ weatherSummary.main }}</b>
     </div>
   </div>
+    
 </template>
 
 <script>

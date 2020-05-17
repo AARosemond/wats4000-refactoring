@@ -12,10 +12,12 @@
         v-bind:to="{ name: 'Forecast', params: { cityId: $route.params.cityId } }"
       >View 5-Day Forecast</router-link>
     </p>
-    <!-- TODO: Make weather summary be in a child component. -->
+    <div v-if="weatherData && errors.length===0">
       <weather-summary v-bind:weatherData="weatherData.weather"></weather-summary>
-      <!-- TODO: Make dl of weather data be in a child component. -->
-      <weather-conditions v-bind:conditions="city.main"></weather-conditions>
+      <weather-conditions v-bind:conditions="weatherData.main"></weather-conditions></div>
+      <div v-else>
+      <h2>Loading...</h2>
+    </div>
     <error-list v-bind:errorList="errors"></error-list>
   </div>
 </template>
@@ -32,8 +34,8 @@ export default {
     return {
       weatherData: null,
       errors: [],
-      query: ""
-    };
+      query: ''
+    }
   },
     created() {
     API.get('weather', {
@@ -49,18 +51,14 @@ export default {
       });
   },
   components: {
-    'weather-summary': WeatherSummary
-  },
-  components: {
-    'weather-conditions': WeatherConditions
-  },
-  components: {
+    'weather-summary': WeatherSummary,
+    'weather-conditions': WeatherConditions,
     'error-list': ErrorList
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped>
 .errors li {
   color: red;
