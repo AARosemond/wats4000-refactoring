@@ -7,24 +7,28 @@
       >for {{ weatherData.city.name }}, {{weatherData.city.country }}</span>
     </h2>
     <p>
-      <router-link to="/">Home</router-link>|
-      <router-link v-bind:to="{ name: 'CurrentWeather', params: { cityId: $route.params.cityId } }">
-        Current Weather
-        <span
-          v-if="weatherData"
-        >for {{ weatherData.city.name }}, {{weatherData.city.country }}</span>
-      </router-link>
+      <li v-for="(forecast,index) in weatherData.list" :key="index">
+        <h3>{{ forecast.dt|formatDate }}</h3>
+        <router-link to="/">Home</router-link>|
+        <router-link v-bind:to="{ name: 'CurrentWeather', params: { cityId: $route.params.cityId } }">
+          Current Weather
+          <span
+            v-if="weatherData"
+          >for {{ weatherData.city.name }}, {{weatherData.city.country }}</span>
+        </router-link>
+      </li>
     </p>
     <ul v-if="weatherData && errors.length===0" class="forecast">
       <li>
-        
         <weather-summary v-bind:weatherData="forecast.weather"></weather-summary>
-        
+
         <weather-conditions v-bind:conditions="forecast.main"></weather-conditions>
-        </li>
+      </li>
     </ul>
     <div v-else>
-      <h2>Loading...</h2></div><error-list v-bind:errorList="errors"></error-list>
+      <h2>Loading...</h2>
+    </div>
+    <error-list v-bind:errorList="errors"></error-list>
   </div>
 </template>
 
@@ -101,9 +105,9 @@ export default {
     }
   },
   components: {
-    'weather-summary': WeatherSummary,
-    'weather-conditions': WeatherConditions,
-    'error-list': ErrorList
+    "weather-summary": WeatherSummary,
+    "weather-conditions": WeatherConditions,
+    "error-list": ErrorList
   }
 };
 </script>

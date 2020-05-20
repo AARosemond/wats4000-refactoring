@@ -17,8 +17,8 @@
           >View Current Weather</router-link>
         </p>
 
-        <weather-summary v-bind:weatherData="weatherData.weather"></weather-summary>
-        <weather-conditions v-bind:conditions="weatherData.main"></weather-conditions>        
+        <weather-summary v-bind:weatherData="city.weather"></weather-summary>
+        <weather-conditions v-bind:conditions="city.main"></weather-conditions>        
       </li>
     </ul>
       <error-list v-bind:errorList="errors"></error-list>
