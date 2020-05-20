@@ -1,28 +1,15 @@
 <template>
   <div>
-    <h2>
-      Five Day Hourly Forecast
-      <span
-        v-if="weatherData"
-      >for {{ weatherData.city.name }}, {{weatherData.city.country }}</span>
-    </h2>
-    
-      <li v-for="(forecast,index) in weatherData.list" :key="index">
-        <h3>{{ forecast.dt|formatDate }}</h3>
-        <router-link to="/">Home</router-link>|
-        <router-link v-bind:to="{ name: 'CurrentWeather', params: { cityId: $route.params.cityId } }">
-          Current Weather
-          <span
-            v-if="weatherData"
-          >for {{ weatherData.city.name }}, {{weatherData.city.country }}</span>
-        </router-link>
-      </li>
-      
+    <h2>Five Day Hourly Forecast <span v-if="weatherData"> for {{ weatherData.city.name }}, {{weatherData.city.country }}</span></h2>
+    <p>
+      <router-link to="/">Home</router-link> |
+      <router-link v-bind:to="{ name: 'CurrentWeather', params: { cityId: $route.params.cityId } }">Current Weather <span v-if="weatherData"> for {{ weatherData.city.name }}, {{weatherData.city.country }}</span></router-link>
+    </p>
 
     <ul v-if="weatherData && errors.length===0" class="forecast">
-      <li>
+      <li v-for="(forecast,index) in weatherData.list" :key="index">
+        <h3>{{ forecast.dt|formatDate }}</h3>
         <weather-summary v-bind:weatherData="forecast.weather"></weather-summary>
-
         <weather-conditions v-bind:conditions="forecast.main"></weather-conditions>
       </li>
     </ul>
@@ -30,6 +17,7 @@
       <h2>Loading...</h2>
     </div>
     <error-list v-bind:errorList="errors"></error-list>
+
   </div>
 </template>
 
