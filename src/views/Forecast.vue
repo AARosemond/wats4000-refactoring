@@ -6,7 +6,7 @@
         v-if="weatherData"
       >for {{ weatherData.city.name }}, {{weatherData.city.country }}</span>
     </h2>
-    <p>
+    
       <li v-for="(forecast,index) in weatherData.list" :key="index">
         <h3>{{ forecast.dt|formatDate }}</h3>
         <router-link to="/">Home</router-link>|
@@ -17,7 +17,8 @@
           >for {{ weatherData.city.name }}, {{weatherData.city.country }}</span>
         </router-link>
       </li>
-    </p>
+      
+
     <ul v-if="weatherData && errors.length===0" class="forecast">
       <li>
         <weather-summary v-bind:weatherData="forecast.weather"></weather-summary>
